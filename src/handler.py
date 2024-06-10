@@ -120,17 +120,11 @@ class LlamaCPPEngine:
 
 async def parse_as_json(response):
     try:
-        return await response.json()
+        result = await response.text()
+        result = result.decode("utf-8")
+        return json.loads(result)
     except Exception as e:
-        logging.error(f"Error getting response as json: {e}")
-    
-    try:
-        text = await response.text()
-        return text.decode("utf-8")
-    except Exception as e:
-        logging.error(f"Error getting response as text: {e}")
-
-    return f"Error parsing response object: {response}"
+        return result
 
 engine = LlamaCPPEngine()
 

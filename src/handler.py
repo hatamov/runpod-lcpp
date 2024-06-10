@@ -148,6 +148,7 @@ async def handler(job):
 
 
 def run():
+    engine.start_server = True
     runpod.serverless.start(
         {
             "handler": handler,

@@ -19,6 +19,18 @@ curl -X POST http://localhost:8000/runsync \
     "openai_input": {
       "prompt": "Once upon a time",
       "n_predict": 20,
+      "model": "astronomer/Llama-3-8B-Instruct-GPTQ-8-Bit",
+      "stream": true
+    }
+  }
+}
+
+{
+  "input": {
+    "openai_route": "/v1/completions",
+    "openai_input": {
+      "prompt": "Once upon a time",
+      "n_predict": 20,
       "stream": true
     }
   }

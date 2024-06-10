@@ -113,6 +113,7 @@ class LlamaCPPEngine:
                     return
 
                 if is_stream:
+                    logging.info(f"streaming response...")
                     async for chunk, _ in response.content.iter_chunks():
                         yield chunk.decode("utf-8")
                 else:
@@ -122,9 +123,14 @@ class LlamaCPPEngine:
 async def parse_as_json(response):
     try:
         result = await response.text()
-        result = result.decode("utf-8")
-        return json.loads(result)
+        logging.info(f"result type1: { type(result) }")
+        # result = result.decode("utf-8")
+        # logging.info(f"result type2: { type(result) }")
+        result = json.loads(result)
+        logging.info(f"result type3: { type(result) }")
+        return result
     except Exception as e:
+        logging.error(f"Error parsing response: {e}")
         return result
 
 engine = LlamaCPPEngine()
@@ -153,17 +159,17 @@ def run():
 
 
 def test():
-    # engine.start_server = False
+    engine.start_server = False
     async def invoke_handler():
         print("Invoking handler")
         job = {
             "input": {
-                "openai_route": "/v1/completions",
+                "openai_route": "/v1/models",
                 "openai_input": {
                     "model": "gpt-2",
                     "prompt": "Once upon a time",
                     # "max_tokens": 50
-                    "stream": True,
+                    # "stream": True,
                     "n_predict": 20
                 }
             }

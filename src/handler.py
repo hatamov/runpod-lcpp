@@ -115,8 +115,7 @@ class LlamaCPPEngine:
                     async for chunk, _ in response.content.iter_chunks():
                         yield chunk.decode("utf-8")
                 else:
-                    resp_json = await response.json()
-                    yield resp_json
+                    yield await parse_as_json(response)
 
 
 async def parse_as_json(response):

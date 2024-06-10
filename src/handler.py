@@ -1,4 +1,5 @@
 import os
+import sys
 import runpod
 import logging
 import shlex
@@ -142,7 +143,6 @@ async def handler(job):
 
 
 def run():
-    engine.start_server = True
     runpod.serverless.start(
         {
             "handler": handler,
@@ -153,8 +153,7 @@ def run():
 
 
 def test():
-    engine.start_server = False
-
+    # engine.start_server = False
     async def invoke_handler():
         print("Invoking handler")
         job = {
@@ -177,5 +176,7 @@ def test():
     loop.run_until_complete(invoke_handler())
 
 
-# test()
-run()
+if sys.argv[1] == "--test":
+    test()
+else:
+    run()

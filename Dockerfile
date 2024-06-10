@@ -9,4 +9,5 @@ RUN apt update && apt install -y libcurl4 curl git
 # RUN apt-get install -y cuda-compat-12-1
 COPY . /repo
 WORKDIR /repo
+ENV LD_LIBRARY_PATH="/usr/local/cuda-12.1/compat"
 CMD ["bash", "/repo/update-and-start.sh"]

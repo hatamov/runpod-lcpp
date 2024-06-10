@@ -126,7 +126,8 @@ async def parse_as_json(response):
         logging.error(f"Error getting response as json: {e}")
     
     try:
-        return await response.text()
+        text = await response.text()
+        return text.decode("utf-8")
     except Exception as e:
         logging.error(f"Error getting response as text: {e}")
 

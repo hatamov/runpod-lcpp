@@ -11,3 +11,26 @@ curl -X POST http://localhost:8000/runsync \
     --data '{"input":{"openai_route": "/v1/completions", "openai_input":{"prompt": "Once upon a time",  "n_predict": 20, "stream":true}}}'
 
 ```
+
+```
+{
+  "input": {
+    "openai_route": "/v1/completions",
+    "openai_input": {
+      "prompt": "Once upon a time",
+      "n_predict": 20,
+      "stream": true
+    }
+  }
+}
+
+{
+  "input": {
+    "openai_route": "/v1/models",
+    "openai_input": {
+      "prompt": "Once upon a time",
+      "n_predict": 20
+    }
+  }
+}
+```

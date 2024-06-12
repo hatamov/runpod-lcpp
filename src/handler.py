@@ -114,7 +114,7 @@ class LlamaCPPEngine:
 
                 if is_stream:
                     logging.info(f"streaming response...")
-                    async for chunk, _ in response.content.iter_chunks():
+                    async for chunk, _ in response.content.iter_any():
                         yield chunk.decode("utf-8")
                 else:
                     yield await parse_as_json(response)

@@ -25,7 +25,7 @@ class LlamaCPPEngine:
         
         port = self.get_server_port()
         base_args = f"/llama-cpp-server --host 127.0.0.1 --port {port}"
-        other_args = os.getenv("LCPP_ARGS", "-m /models/Phi-3-mini-4k-instruct-q4.gguf")
+        other_args = os.getenv("LCPP_ARGS", "-m /models/$HFF")
         return f"{base_args} {other_args}"
 
 

@@ -7,6 +7,8 @@ env
 echo "Running processes:"
 ps aux
 
+apt-get install -y libcublas-12-1
+
 export VOLUME_PATH="/runpod-volume"
 export MODELS_DIR="$VOLUME_PATH/models"
 mkdir -p $MODELS_DIR

@@ -14,7 +14,7 @@ mkdir -p $MODELS_DIR
 tree -L 3 $VOLUME_PATH
 
 echo "Volume path: $VOLUME_PATH"
-du -hs $VOLUME_PATH
+du -h -d 2 $VOLUME_PATH
 
 if [ -n "$CUSTOM_INIT_COMMAND" ]; then
     $CUSTOM_INIT_COMMAND

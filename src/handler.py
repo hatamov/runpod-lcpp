@@ -13,7 +13,7 @@ import json
 
 running_servers = []
 def cleanup_process():
-    logging.info("Stopping llama cpp server in clean")
+    logging.info("running cleanup_process...")
     for src in running_servers:
         src.stop()
 

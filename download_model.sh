@@ -14,7 +14,8 @@ if [ -z "$HF_DOWNLOAD_ARGS" ]; then
 fi  
 
 echo "Downloading model: $HF_DOWNLOAD_ARGS"
-huggingface-cli download $HF_DOWNLOAD_ARGS &
+# huggingface-cli download $HF_DOWNLOAD_ARGS &
+huggingface-cli download microsoft/Phi-3-mini-4k-instruct-gguf Phi-3-mini-4k-instruct-gguf &
 download_pid=$!
 
 print_dir_size $download_pid

@@ -204,6 +204,7 @@ def run():
             wait=os.getenv("INITIAL_WAIT", "0") == "1"
         )
 
+    logging.info("Starting serverless.runpod.serverless.start")
     runpod.serverless.start(
         {
             "handler": handler,

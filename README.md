@@ -45,4 +45,7 @@ curl -X POST http://localhost:8000/runsync \
     }
   }
 }
+
+# HFR=microsoft/Phi-3-mini-4k-instruct-gguf
+# HFF=Phi-3-mini-4k-instruct-q4.gguf
 ```

@@ -1,17 +1,20 @@
 #!/bin/bash
 set -ex
 
-mkdir -p /models
+echo "Environment variables:"
+env
 
-if [ -n "$HFR" ]; then
-    # HFR=microsoft/Phi-3-mini-4k-instruct-gguf
-    # HFF=Phi-3-mini-4k-instruct-q4.gguf
+echo "Running processes:"
+ps aux
 
-    echo "Downloading model: $HFR $HFF"
-    huggingface-cli download --local-dir /models --resume-download $HFR $HFF
-    echo "Downloading complete"
-fi
 
+export VOLUME_PATH="/runpod-volume"
+export MODELS_DIR="$VOLUME_PATH/models"
+mkdir -p $MODELS_DIR
+tree -L 3 $VOLUME_PATH
+
+echo "Volume path: $VOLUME_PATH"
+du -hs $VOLUME_PATH
 
 if [ -n "$CUSTOM_INIT_COMMAND" ]; then
     $CUSTOM_INIT_COMMAND

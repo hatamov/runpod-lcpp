@@ -1,8 +1,12 @@
 #!/bin/bash
 set -ex
 
-git remote set-url origin https://github.com/hatamov/runpod-lcpp.git
-git fetch origin master
-git reset --hard origin/master
+UPSTREAM_REPO_DEFAULT="https://github.com/hatamov/runpod-lcpp.git"
+UPSTREAM_REPO="${UPSTREAM_REPO:-$UPSTREAM_REPO_DEFAULT}"
+UPSTREAM_BRANCH="${UPSTREAM_BRANCH:-master}"
 
-exec /repo/start.sh
+git remote set-url origin "$UPSTREAM_REPO"
+git fetch origin "$UPSTREAM_BRANCH"
+git reset --hard "origin/$UPSTREAM_BRANCH"
+
+exec ./start.sh

@@ -2,7 +2,7 @@
 set -ex
 
 HFR="${HFR:-microsoft/Phi-3-mini-4k-instruct-gguf}"
-HFF="${HFF:-Phi-3-mini-4k-instruct-gguf}"
+HFF="${HFF:-Phi-3-mini-4k-instruct-q4.gguf}"
 MODEL="$MODELS_DIR/$HFF"
 
 export S_LCPP_PORT=1515

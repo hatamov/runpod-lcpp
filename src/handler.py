@@ -120,9 +120,10 @@ class Processor:
 
     def trigger_full_restart(self):
         logging.info("Triggering full restart")
-        with open("./.watch_reloader", "w") as f:
-            f.write(str(time.time()))
-    
+        os.system("sh -c 'sleep 1 && date > ./.watch_reloader' &")
+        # with open("./.watch_reloader", "w") as f:
+        #     f.write(str(time.time()))
+
     def start_new_server(self, name, wait=True):
         if self.active_server is not None:
             self.active_server.stop()

@@ -2,9 +2,12 @@
 
 FROM runpod/worker-vllm:stable-cuda12.1.0 as vllm
 
-RUN apt update && apt install -y libcurl4 curl git entr python3.10-venv
+RUN apt update && apt install -y libcurl4 curl git entr python3.10-venv tree
 
 RUN pip install llama-cpp-python \
+  --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu121
+
+RUN pip install llama-cpp-python[server] \
   --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu121
 
 RUN git clone https://github.com/theroyallab/tabbyAPI /tabbyAPI && \

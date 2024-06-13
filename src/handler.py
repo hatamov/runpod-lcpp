@@ -38,10 +38,10 @@ class LLMServer:
         running_servers.append(self)
 
     def wait_until_ready(self, timeout=None):
-        logging.info("Waiting for server {self.name} to be ready")
+        logging.info(f"Waiting for server {self.name} to be ready")
 
         if timeout is None:
-            timeout = int(os.environ("S_WAIT_TIMEOUT", 120))
+            timeout = int(os.environ.get("S_WAIT_TIMEOUT", 120))
 
         start_time = time.time()
         while time.time() - start_time < timeout:

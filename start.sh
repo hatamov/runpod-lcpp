@@ -10,7 +10,7 @@ ps aux
 export VOLUME_PATH="/runpod-volume"
 export MODELS_DIR="$VOLUME_PATH/models"
 mkdir -p $MODELS_DIR
-tree -L 3 $VOLUME_PATH
+tree -h -L 3 $VOLUME_PATH
 
 echo "Volume path: $VOLUME_PATH"
 du -h -d 2 $VOLUME_PATH

@@ -2,7 +2,8 @@
 set -ex
 
 print_dir_size() {
-    du -h -d 1 $VOLUME_PATH
+    # du -h -d 1 $VOLUME_PATH
+    tree -h -L 3 $VOLUME_PATH
 }
 
 print_loop() {

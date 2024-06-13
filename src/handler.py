@@ -143,6 +143,7 @@ class Processor:
 
 
     async def process(self, job):
+        logging.info(f"Received job: {job}")
         job_input = job["input"]
 
         is_detected, msg = self.check_admin_commands(job_input)

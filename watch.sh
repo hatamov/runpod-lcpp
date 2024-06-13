@@ -1,2 +1,2 @@
 #!/bin/bash
-ls ./.watch_reloader | entr -r ./update-and-start.sh
+ls ./.watch_reloader | entr -r -n ./update-and-start.sh

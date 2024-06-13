@@ -14,7 +14,7 @@ if [ -z "$HF_DOWNLOAD_ARGS" ]; then
 fi  
 
 echo "Downloading model: $HF_DOWNLOAD_ARGS"
-huggingface-cli download $HF_DOWNLOAD_ARGS &
+huggingface-cli download --local-dir $MODELS_DIR $HF_DOWNLOAD_ARGS &
 download_pid=$!
 
 print_dir_size $download_pid
@@ -23,4 +23,4 @@ print_dir_size $download_pid
 wait $download_pid
 
 echo "Downloading complete"
-du -h -d 1 $MODELS_DIR
+du -h -d 1 $VOLUME_PATH

@@ -23,4 +23,5 @@ if [ -n "$CUSTOM_INIT_COMMAND" ]; then
 fi
 
 export S_LCPP_CMD="./server_lcpp.sh"
+export S_EXL2_CMD="./server_exl2.sh"
 exec python3 ./src/handler.py

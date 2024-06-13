@@ -1,5 +1,15 @@
 #!/bin/bash
-set -e
+set -ex
+
+if [ -n "$SKIP_DOWNLOAD" ]; then
+    echo "Skipping download"
+    exit 0
+fi
+
+if [ -z "$HF_DOWNLOAD_ARGS" ]; then
+    echo "HF_DOWNLOAD_ARGS is not set"
+    exit 0
+fi  
 
 print_dir_size() {
     # du -h -d 1 $VOLUME_PATH
@@ -12,11 +22,6 @@ print_loop() {
         sleep 5
     done
 }
-
-if [ -z "$HF_DOWNLOAD_ARGS" ]; then
-    echo "HF_DOWNLOAD_ARGS is not set"
-    exit 0
-fi  
 
 echo "Downloading model: $HF_DOWNLOAD_ARGS"
 huggingface-cli download --local-dir $MODELS_DIR $HF_DOWNLOAD_ARGS &

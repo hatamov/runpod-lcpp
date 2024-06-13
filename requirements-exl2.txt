@@ -1,0 +1,19 @@
+exllamav2 @ https://github.com/turboderp/exllamav2/releases/download/v0.1.5/exllamav2-0.1.5+cu121.torch2.3.1-cp310-cp310-linux_x86_64.whl
+
+# These are requirements from for tabbyAPI
+# https://github.com/theroyallab/tabbyAPI/blob/main/pyproject.toml
+# For some reason official instruction didn't work with --system-site-packages evnironment
+fastapi >= 0.110.0
+pydantic >= 2.0.0
+PyYAML
+rich
+uvicorn >= 0.28.1
+jinja2 >= 3.0.0
+loguru
+sse-starlette
+packaging
+tokenizers
+lm-format-enforcer >= 0.9.6
+aiofiles
+aiohttp
+huggingface_hub

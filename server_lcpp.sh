@@ -1,5 +1,7 @@
 #!/bin/bash
 set -ex
+export VOLUME_PATH="/runpod-volume"
+export MODELS_DIR="$VOLUME_PATH/models"
 
 HFR="${HFR:-microsoft/Phi-3-mini-4k-instruct-gguf}"
 HFF="${HFF:-Phi-3-mini-4k-instruct-q4.gguf}"

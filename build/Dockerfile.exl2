@@ -1,0 +1,10 @@
+# NOT WORKING YET
+ARG WORKER_CUDA_VERSION=12.1.0
+FROM nvidia/cuda:${WORKER_CUDA_VERSION}-devel-ubuntu22.04 AS cuda_devel
+
+RUN apt-get update -y \
+    && apt-get install -y python3-pip git libssl-dev cmake curl libcurl4-openssl-dev ccache
+
+RUN git clone https://github.com/turboderp/exllamav2 /exllamav2
+RUN cd /exllamav2 && pip install -r requirements.txt
+RUN cd /exllamav2 && pip install .

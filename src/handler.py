@@ -228,7 +228,7 @@ async def handler(job):
 
 
 def run():
-    if os.getenv("INITIAL_START", "0") == "1":
+    if os.getenv("START_SEVER_ON_BOOT", "0") == "1":
         processor.start_new_server(
             name=get_initial_server_name(),
             wait=os.getenv("INITIAL_WAIT", "0") == "1"

@@ -7,7 +7,6 @@ env
 echo "Running processes:"
 ps aux
 
-
 export VOLUME_PATH="/runpod-volume"
 export MODELS_DIR="$VOLUME_PATH/models"
 mkdir -p $MODELS_DIR
@@ -20,4 +19,5 @@ if [ -n "$CUSTOM_INIT_COMMAND" ]; then
     $CUSTOM_INIT_COMMAND
 fi
 
+export S_LCPP_CMD="./server_lcpp.sh"
 exec python3 ./src/handler.py

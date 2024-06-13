@@ -7,7 +7,8 @@ env
 echo "Running processes:"
 ps aux
 
-apt-get install -y libcublas-12-1
+# apt-get install -y libcublas-12-1
+export LD_LIBRARY_PATH="/usr/local/cuda-12.1/compat:/usr/local/lib/python3.10/dist-packages/nvidia/cublas/lib"
 
 export VOLUME_PATH="/runpod-volume"
 export MODELS_DIR="$VOLUME_PATH/models"

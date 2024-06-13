@@ -45,12 +45,13 @@ class LLMServer:
 
         start_time = time.time()
         last_log_time = start_time
+        last_error = None
         while time.time() - start_time < timeout:
             try:
                 response = self.call_v1_models()
                 response.raise_for_status()  # Raises an HTTPError if the HTTP request returned an unsuccessful status code
-            except requests.exceptions.ConnectionError:
-                pass
+            except requests.exceptions.ConnectionError as e:
+                last_error = e
             except requests.exceptions.HTTPError as http_err:
                 logging.info(f"wait_until_ready: HTTP error occurred: {http_err}")
                 return False
@@ -61,14 +62,16 @@ class LLMServer:
                 logging.info("wait_until_ready: Server is ready")
                 self.ready = True
                 return True
-            
+
             if time.time() - last_log_time >= 5:
-                logging.info(f"wait_until_ready: Not after {time.time() - start_time} seconds")
+                elapsed = time.time() - start_time
+                logging.info(f"wait_until_ready: Not ready after {elapsed:.1f} seconds. Last error: {last_error}")
                 last_log_time = time.time()
 
             time.sleep(1)
 
-        logging.error(f"Server failed to start server {self.name} after {timeout} seconds")
+        elapsed = time.time() - start_time
+        logging.error(f"Server failed to start server {self.name} after {elapsed:.1f} seconds. Last error: {last_error}")
         return False
 
     def stop(self):
@@ -86,7 +89,7 @@ class LLMServer:
 
     def call_v1_models(self, timeout=1):
         url = self.get_base_url() + "/v1/models"
-        logging.info(f"Calling {url}")
+        # logging.info(f"Calling {url}")
         return requests.get(url, timeout=timeout)
 
 

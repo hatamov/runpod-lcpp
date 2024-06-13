@@ -165,7 +165,6 @@ class Processor:
         return job_input
 
 
-
     async def process(self, job):
         logging.info(f"Received job: {job}")
         job_input = job["input"]

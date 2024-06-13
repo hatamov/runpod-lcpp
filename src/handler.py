@@ -152,6 +152,15 @@ class Processor:
             yield msg
             return
         
+        openai_route = job_input.get("openai_route")
+        if not openai_route:
+            job_input["openai_route"] = "/v1/completions"
+            job_input["openai_input"] = {
+                "prompt": job_input.get("prompt", "Once upon a time"),
+                "n_predict": 20,
+                "stream": True,
+            }
+        
         self.ensure_server()
 
         url = self.active_server.get_base_url() + job_input.get("openai_route")

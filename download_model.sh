@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -e
 
 print_dir_size() {
     # du -h -d 1 $VOLUME_PATH
@@ -7,7 +7,7 @@ print_dir_size() {
 }
 
 print_loop() {
-    while true; do
+    while kill -0 $1 2> /dev/null; do
         print_dir_size
         sleep 5
     done

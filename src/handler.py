@@ -44,6 +44,7 @@ class LLMServer:
             timeout = int(os.environ.get("S_WAIT_TIMEOUT", 120))
 
         start_time = time.time()
+        last_log_time = start_time
         while time.time() - start_time < timeout:
             try:
                 response = self.call_v1_models()
@@ -61,8 +62,9 @@ class LLMServer:
                 self.ready = True
                 return True
             
-            if time.time() % 5 == 0:
+            if time.time() - last_log_time >= 5:
                 logging.info(f"wait_until_ready: Not after {time.time() - start_time} seconds")
+                last_log_time = time.time()
 
             time.sleep(1)
 
@@ -82,7 +84,7 @@ class LLMServer:
     def get_base_url(self):
         return f"http://localhost:{self.get_port()}"
 
-    def call_v1_models(self, timeout=0.5):
+    def call_v1_models(self, timeout=1):
         url = self.get_base_url() + "/v1/models"
         logging.info(f"Calling {url}")
         return requests.get(url, timeout=timeout)

@@ -12,7 +12,8 @@ export MODELS_DIR="$VOLUME_PATH/models"
 
 export HF_HUB_ENABLE_HF_TRANSFER=0
 
-export LD_LIBRARY_PATH="/usr/local/cuda-12.1/compat:/usr/local/lib/python3.10/dist-packages/nvidia/cublas/lib"
+# /usr/local/cuda-12.1/compat
+export LD_LIBRARY_PATH="/usr/local/lib/python3.10/dist-packages/nvidia/cublas/lib"
 
 export SKIP_DOWNLOAD=1
 

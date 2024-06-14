@@ -16,6 +16,6 @@ export LD_LIBRARY_PATH="/usr/local/cuda-12.1/compat:/usr/local/lib/python3.10/di
 
 export SKIP_DOWNLOAD=1
 
-export MODEL_FILE="main.guff"
+export MODEL_FILE="$MODELS_DIR/main.guff"
 # export INITIAL_SERVER="vllm"
 export INITIAL_SERVER="lcpp"

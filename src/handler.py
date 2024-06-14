@@ -26,7 +26,7 @@ class LLMServer:
         self.ready = False
 
     def start(self):
-        cmd = os.environ.get(f"S_{self.name}_CMD", "echo 'No command provided'")
+        cmd = os.environ.get(f"S_{self.name.upper()}_CMD", "echo 'No command provided'")
         logging.info(f"Starting server {self.name} with command: {cmd}")
 
         args = shlex.split(cmd)
@@ -82,7 +82,10 @@ class LLMServer:
             running_servers.remove(self)
 
     def get_port(self):
-        return os.getenv("S_{self.name}_PORT", 1515)
+        port = os.getenv(f"S_{self.name.upper()}_PORT")
+        if port is None:
+            raise Exception(f"Port not found for server {self.name}")
+        return port
     
     def get_base_url(self):
         return f"http://localhost:{self.get_port()}"
@@ -216,7 +219,7 @@ async def parse_as_json(response):
         return result
 
 def get_initial_server_name():
-    return os.environ.get("INITIAL_SERVER", "LCPP")
+    return os.environ.get("INITIAL_SERVER", "lcpp")
 
 processor = Processor(None)
 

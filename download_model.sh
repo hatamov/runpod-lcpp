@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -e
 
 if [ -n "$SKIP_DOWNLOAD" ]; then
     echo "Skipping download"
@@ -9,11 +9,14 @@ fi
 if [ -z "$HF_DOWNLOAD_ARGS" ]; then
     echo "HF_DOWNLOAD_ARGS is not set"
     exit 0
-fi  
+fi
+
+mkdir -p "$MODELS_DIR"
+du -h -d 1 "$MODELS_DIR"
 
 print_dir_size() {
-    # du -h -d 1 $VOLUME_PATH
-    tree -h -L 3 $VOLUME_PATH
+    du -hs $VOLUME_PATH
+    # tree -h -L 3 $VOLUME_PATH
 }
 
 print_loop() {
@@ -24,7 +27,7 @@ print_loop() {
 }
 
 echo "Downloading model: $HF_DOWNLOAD_ARGS"
-huggingface-cli download --local-dir $MODELS_DIR $HF_DOWNLOAD_ARGS &
+HF_HUB_ENABLE_HF_TRANSFER=0 huggingface-cli download --local-dir $MODELS_DIR $HF_DOWNLOAD_ARGS &
 download_pid=$!
 
 print_loop $download_pid

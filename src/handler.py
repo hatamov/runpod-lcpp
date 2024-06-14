@@ -98,18 +98,17 @@ class Processor:
     def __init__(self, server):
         self.active_server = server
 
-    def check_admin_commands(self, job_input):
-        prompt = job_input.get("prompt", "")
-        if prompt == "!rf":
-            logging.info("Received full restart command")
-            self.trigger_full_restart()
-            return True, "Triggered full restart."
-        
+    def run_admin_commands(self, job_input):
         if job_input.get("update_env"):
             logging.info("Received env update command")
             updated_env_dict = job_input.get("env")
             os.environ.update(updated_env_dict)
-            return True, f"Updated env."
+
+        prompt = job_input.get("prompt", "")
+        if prompt == "!rf":
+            logging.info("Received full restart command")
+            self.trigger_full_restart()
+            return False, "Triggered full restart."
 
         new_server_name = job_input.get("new_server")
         if new_server_name:
@@ -117,9 +116,9 @@ class Processor:
 
             logging.info(f"Received new server command {new_server_name=}, {wait=}")
             self.start_new_server(name=new_server_name, wait=wait)
-            return True, "Started new server."
+            return False, "Started new server."
 
-        return False, ""
+        return True, ""
 
     def trigger_full_restart(self):
         logging.info("Triggering full restart")
@@ -172,8 +171,8 @@ class Processor:
         logging.info(f"Received job: {job}")
         job_input = job["input"]
 
-        is_detected, msg = self.check_admin_commands(job_input)
-        if is_detected:
+        should_continue, msg = self.run_admin_commands(job_input)
+        if not should_continue:
             yield msg
             return
         

@@ -41,4 +41,13 @@ payloads:
     }
   }
 }
-```
+
+{
+  "input": {
+    "env": {
+      "INITIAL_SERVER": "EXL2"
+    },
+    "update_env": true,
+    "prompt": "!rs"
+  }
+}

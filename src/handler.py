@@ -99,9 +99,9 @@ class Processor:
         self.active_server = server
 
     def run_admin_commands(self, job_input):
-        if job_input.get("update_env"):
+        if job_input.get("env_override"):
             logging.info("Received env update command")
-            updated_env_dict = job_input.get("env")
+            updated_env_dict = job_input.get("env_override")
             os.environ.update(updated_env_dict)
 
         prompt = job_input.get("prompt", "")

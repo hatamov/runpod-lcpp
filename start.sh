@@ -22,7 +22,8 @@ if [ -n "$CUSTOM_INIT_COMMAND" ]; then
     $CUSTOM_INIT_COMMAND
 fi
 
-export INITIAL_SERVER="EXL2"
+export INITIAL_SERVER="LCPP"
+# export INITIAL_SERVER="EXL2"
 export S_LCPP_CMD="./server_lcpp.sh"
 export S_EXL2_CMD="./server_exl2.sh"
 exec python3 ./src/handler.py

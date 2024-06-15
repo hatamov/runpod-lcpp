@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
-source ./env.sh
 
 if [ "$SKIP_DOWNLOAD" == "1" ]; then
     exit 0

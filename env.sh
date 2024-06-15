@@ -32,9 +32,9 @@ export HF_HUB_ENABLE_HF_TRANSFER=0
 export INITIAL_SERVER="lcpp"
 export START_SEVER_ON_BOOT=0
 
-export LLCP_MODEL_PATH="/runpod-volume/models/microsoft__Phi-3-mini-4k-instruct-gguf/Phi-3-mini-4k-instruct-q4.gguf"
-export VLLM_MODEL_PATH="/runpod-volume/models/kaitchup__Phi-3-mini-4k-instruct-gptq-4bit"
-export EXL2_MODEL_NAME="bartowski__Phi-3-mini-4k-instruct-exl2"
+export LLCP_MODEL_PATH="/runpod-volume/models/microsoft--Phi-3-mini-4k-instruct-gguf/Phi-3-mini-4k-instruct-q4.gguf"
+export VLLM_MODEL_PATH="/runpod-volume/models/kaitchup--Phi-3-mini-4k-instruct-gptq-4bit"
+export EXL2_MODEL_NAME="bartowski--Phi-3-mini-4k-instruct-exl2"
 
 export EXL2_CONFIG="
 # https://github.com/theroyallab/tabbyAPI/blob/main/config_sample.yml
@@ -49,5 +49,5 @@ logging:
 
 model:
   model_dir: $MODELS_DIR
-  model_name:
+  model_name: $EXL2_MODEL_NAME
 "

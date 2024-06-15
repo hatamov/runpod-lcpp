@@ -9,4 +9,5 @@ fi
 
 
 echo -e "$EXL2_CONFIG" > ./exl2-config.yml
+echo -e "$EXL2_CONFIG" > /tabbyAPI/config.yml
 exec python3 ./src/handler.py

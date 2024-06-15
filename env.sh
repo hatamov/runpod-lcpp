@@ -50,4 +50,5 @@ logging:
 model:
   model_dir: $MODELS_DIR
   model_name: $EXL2_MODEL_NAME
+  cache_mode: Q8
 "

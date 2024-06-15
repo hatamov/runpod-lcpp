@@ -12,5 +12,4 @@ logging:
 model:
   model_dir: /runpod-volume/models
   model_name:
-
-
+  cache_mode: Q8

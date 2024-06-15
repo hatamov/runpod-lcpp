@@ -1,6 +1,7 @@
 #!/bin/bash
 source ./env.sh
 
+CONFIG_URL=""
 if [ -n "$CONFIG_URL" ]; then
     curl "$CONFIG_URL" > ./config.sh
     source ./config.sh

@@ -25,8 +25,8 @@ export DL_ALLOW_PATTERNS="Phi-3-mini-4k-instruct-q4.gguf"
 # export DL_REVISION=""
 # export DL_ALLOW_PATTERNS=""
 
-export DL_LOCAL_DIR="$MODELS_DIR/$DL_REPO_ID"
-export DL_LOCAL_DIR="${DL_LOCAL_DIR//\//__}" # Replace '/' with '__'
+export DL_REPO_ID_DASHED="${DL_REPO_ID//\//__}" # Replace '/' with '__'
+export DL_LOCAL_DIR="$MODELS_DIR/$DL_REPO_ID_DASHED"
 
 export SKIP_DOWNLOAD=1
 export HF_HUB_ENABLE_HF_TRANSFER=0

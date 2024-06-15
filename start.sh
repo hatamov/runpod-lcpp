@@ -1,8 +1,6 @@
 #!/bin/bash
 source ./env.sh
 
-CONFIG_URL=""
-SKIP_DOWNLOAD=0
 if [ -n "$CONFIG_URL" ]; then
     curl "$CONFIG_URL" > ./config.sh
     source ./config.sh

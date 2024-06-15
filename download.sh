@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-if [ "$SKIP_DOWNLOAD" == "1" ]; then
+if [ "$SHOULD_DOWNLOAD" != "1" ]; then
     exit 0
 fi
 

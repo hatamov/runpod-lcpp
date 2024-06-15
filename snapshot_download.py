@@ -19,10 +19,6 @@ args = parser.parse_args()
 
 
 if __name__ == "__main__":
-    if os.environ.get("SKIP_DOWNLOAD", "0") == "1":
-        print("Skipping download")
-        exit(0)
-
     print(f"snapshot_download: args = {args}")
 
     allow_patterns = args.allow_patterns or None

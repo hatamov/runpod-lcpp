@@ -28,17 +28,15 @@ export DL_ALLOW_PATTERNS="Phi-3-mini-4k-instruct-q4.gguf"
 export DL_REPO_ID_DASHED="${DL_REPO_ID//\//__}" # Replace '/' with '--'
 export DL_LOCAL_DIR="$MODELS_DIR/$DL_REPO_ID_DASHED"
 
-export SKIP_DOWNLOAD=1
+export SHOULD_DOWNLOAD=0
 export HF_HUB_ENABLE_HF_TRANSFER=0
 
 # Initial server "lcpp", "vllm" or "exl2"
 export INITIAL_SERVER="lcpp"
 export START_SEVER_ON_BOOT=0
 
-
 export LLCP_MODEL_PATH="/runpod-volume/models/microsoft__Phi-3-mini-4k-instruct-gguf/Phi-3-mini-4k-instruct-q4.gguf"
 export VLLM_MODEL_PATH="/runpod-volume/models/kaitchup__Phi-3-mini-4k-instruct-gptq-4bit"
-export EXL2_MODEL_DIR="$MODELS_DIR"
 export EXL2_MODEL_NAME="bartowski__Phi-3-mini-4k-instruct-exl2"
 
 export EXL2_CONFIG="
@@ -53,7 +51,6 @@ logging:
   generation_params: False
 
 model:
-  model_dir: $EXL2_MODEL_DIR
+  model_dir: $MODELS_DIR
   model_name:
-
 "

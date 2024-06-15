@@ -1,0 +1,13 @@
+# https://github.com/theroyallab/tabbyAPI/blob/main/config_sample.yml
+network:
+  host: 127.0.0.1
+  port: 8002
+  disable_auth: True
+
+logging:
+  prompt: False
+  generation_params: False
+
+model:
+  model_dir: /runpod-volume/models
+  model_name:

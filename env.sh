@@ -10,15 +10,50 @@ export S_VLLM_PORT=8003
 export VOLUME_PATH="/runpod-volume"
 export MODELS_DIR="$VOLUME_PATH/models"
 
-export HF_HUB_ENABLE_HF_TRANSFER=0
+# GUFF
+export DL_REPO_ID="microsoft/Phi-3-mini-4k-instruct-gguf"
+export DL_REVISION=""
+export DL_ALLOW_PATTERNS="Phi-3-mini-4k-instruct-q4.gguf"
 
-# /usr/local/cuda-12.1/compat
-# export LD_LIBRARY_PATH="/usr/local/lib/python3.10/dist-packages/nvidia/cublas/lib"
+# EXL2
+# export DL_REPO="bartowski/Phi-3-mini-4k-instruct-exl2"
+# export DL_REVISION="ref/heads/4_25"
+# export DL_ALLOW_PATTERNS=""
+
+# GPTQ
+# export DL_REPO="kaitchup/Phi-3-mini-4k-instruct-gptq-4bit"
+# export DL_REVISION=""
+# export DL_ALLOW_PATTERNS=""
+
+export DL_LOCAL_DIR="$MODELS_DIR/$DL_REPO_ID"
+export DL_LOCAL_DIR="${DL_LOCAL_DIR//\//__}" # Replace '/' with '__'
 
 export SKIP_DOWNLOAD=1
+export HF_HUB_ENABLE_HF_TRANSFER=0
 
-export MODEL_PATH="$MODELS_DIR/main.guff"
-# export INITIAL_SERVER="vllm"
+# Initial server "lcpp", "vllm" or "exl2"
 export INITIAL_SERVER="lcpp"
-
 export START_SEVER_ON_BOOT=0
+
+
+export LLCP_MODEL_PATH="/runpod-volume/models/microsoft__Phi-3-mini-4k-instruct-gguf/Phi-3-mini-4k-instruct-q4.gguf"
+export VLLM_MODEL_PATH="/runpod-volume/models/kaitchup__Phi-3-mini-4k-instruct-gptq-4bit"
+export EXL2_MODEL_DIR="$MODELS_DIR"
+export EXL2_MODEL_NAME="bartowski__Phi-3-mini-4k-instruct-exl2"
+
+export EXL2_CONFIG="
+# https://github.com/theroyallab/tabbyAPI/blob/main/config_sample.yml
+network:
+  host: 127.0.0.1
+  port: 8002
+  disable_auth: True
+
+logging:
+  prompt: False
+  generation_params: False
+
+model:
+  model_dir: $EXL2_MODEL_DIR
+  model_name:
+
+"

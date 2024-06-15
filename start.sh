@@ -1,10 +1,10 @@
 #!/bin/bash
-set -ex
 source ./env.sh
 
 if [ -n "$CONFIG_URL" ]; then
-    curl "$CONFIG_URL" > ./startup-config.sh
-    source ./startup-config.sh
+    curl "$CONFIG_URL" > ./config.sh
+    source ./config.sh
 fi
 
+echo -e "$EXL2_CONFIG" > ./exl2-config.yml
 exec python3 ./src/handler.py

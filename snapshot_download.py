@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
     snapshot_download(
         args.repo_id,
-        revision=args.revision,
+        revision=args.revision or None,
         cache_dir=args.cache_dir,
         local_dir=args.local_dir,
         allow_patterns=allow_patterns,

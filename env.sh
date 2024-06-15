@@ -16,17 +16,14 @@ export DL_REVISION=""
 export DL_ALLOW_PATTERNS="Phi-3-mini-4k-instruct-q4.gguf"
 
 # EXL2
-# export DL_REPO="bartowski/Phi-3-mini-4k-instruct-exl2"
-# export DL_REVISION="ref/heads/4_25"
-# export DL_ALLOW_PATTERNS=""
+export DL_REPO_ID="bartowski/Phi-3-mini-4k-instruct-exl2"
+export DL_REVISION="refs/heads/4_25"
+export DL_ALLOW_PATTERNS=""
 
 # GPTQ
-# export DL_REPO="kaitchup/Phi-3-mini-4k-instruct-gptq-4bit"
-# export DL_REVISION=""
-# export DL_ALLOW_PATTERNS=""
-
-export DL_REPO_ID_DASHED="${DL_REPO_ID//\//__}" # Replace '/' with '--'
-export DL_LOCAL_DIR="$MODELS_DIR/$DL_REPO_ID_DASHED"
+export DL_REPO_ID="kaitchup/Phi-3-mini-4k-instruct-gptq-4bit"
+export DL_REVISION=""
+export DL_ALLOW_PATTERNS=""
 
 export SHOULD_DOWNLOAD=0
 export HF_HUB_ENABLE_HF_TRANSFER=0

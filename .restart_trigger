@@ -1,0 +1,6 @@
+Dummy file used to trigger restart of the container command.
+It is watched by `entr` command (see watch.sh)
+
+To trigger restart, simply modify this file with some random value, for example
+
+date > .restart_trigger

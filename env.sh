@@ -13,10 +13,12 @@ export MODELS_DIR="$VOLUME_PATH/models"
 export HF_HUB_ENABLE_HF_TRANSFER=0
 
 # /usr/local/cuda-12.1/compat
-export LD_LIBRARY_PATH="/usr/local/lib/python3.10/dist-packages/nvidia/cublas/lib"
+# export LD_LIBRARY_PATH="/usr/local/lib/python3.10/dist-packages/nvidia/cublas/lib"
 
 export SKIP_DOWNLOAD=1
 
-export MODEL_FILE="$MODELS_DIR/main.guff"
+export MODEL_PATH="$MODELS_DIR/main.guff"
 # export INITIAL_SERVER="vllm"
 export INITIAL_SERVER="lcpp"
+
+export START_SEVER_ON_BOOT=0

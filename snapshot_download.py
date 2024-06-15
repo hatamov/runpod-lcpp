@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+This is a wrapper script around the `huggingface_hub.snapshot_download` function.
+"""
 import os
 import argparse
 from huggingface_hub import snapshot_download

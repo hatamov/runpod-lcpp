@@ -38,6 +38,9 @@ class LLMServer:
         running_servers.append(self)
 
     def wait_until_ready(self, timeout=None):
+        if self.ready:
+            return True
+
         logging.info(f"Waiting for server {self.name} to be ready")
 
         if timeout is None:
@@ -101,51 +104,24 @@ class Processor:
     def __init__(self, server):
         self.active_server = server
 
-    def run_admin_commands(self, job_input):
-        if job_input.get("env_override"):
-            logging.info("Received env update command")
-            updated_env_dict = job_input.get("env_override")
-            os.environ.update(updated_env_dict)
-
-        prompt = job_input.get("prompt", "")
-        if prompt == "!rf":
-            logging.info("Received full restart command")
-            self.trigger_full_restart()
-            return False, "Triggered full restart."
-
-        new_server_name = job_input.get("new_server")
-        if new_server_name:
-            wait = job_input.get("wait", False)
-
-            logging.info(f"Received new server command {new_server_name=}, {wait=}")
-            self.start_new_server(name=new_server_name, wait=wait)
-            return False, "Started new server."
-
-        return True, ""
-
-    def trigger_full_restart(self):
-        logging.info("Triggering full restart")
-        os.system("sh -c 'sleep 1 && date > ./.watch_reloader' &")
-        # with open("./.watch_reloader", "w") as f:
-        #     f.write(str(time.time()))
-
-    def start_new_server(self, name, wait=True):
+    def start_new_server(self):
+        name = os.environ.get("INITIAL_SERVER", "lcpp")
+        logging.info(f"Starting new server {name}")
         if self.active_server is not None:
             self.active_server.stop()
 
         self.active_server = LLMServer(name)
         self.active_server.start()
-
-        if wait:
-            self.active_server.wait_until_ready()
-
     
     def ensure_server(self):
-        if not self.active_server:
-            self.start_new_server(get_initial_server_name(), wait=False)
-        
-        if not self.active_server.ready:
-            self.active_server.wait_until_ready()
+        if self.active_server:
+            if self.active_server.ready:
+                return True
+            
+            return self.active_server.wait_until_ready()
+
+        self.start_new_server()
+        return self.active_server.wait_until_ready()
 
     
     def normalize_input(self, job_input):
@@ -169,31 +145,39 @@ class Processor:
         
         return job_input
 
+    def run_admin_command(self, job_input):
+        admin_cmd = job_input.get("admin")
+        if admin_cmd == "restart":
+            logging.info("Triggering full restart")
+            os.system("sh -c 'sleep 1 && date > ./.restart_trigger' &")
+            return "Triggered full restart."
+
+        return None
 
     async def process(self, job):
         logging.info(f"Received job: {job}")
         job_input = job["input"]
 
-        should_continue, msg = self.run_admin_commands(job_input)
-        if not should_continue:
-            yield msg
+        cmd_result = self.run_admin_command(job_input)
+        if cmd_result:
+            yield cmd_result
             return
-        
+
         self.normalize_input(job_input)
-        self.ensure_server()
+        if not self.ensure_server():
+            yield "Server failed to start."
+            return
 
         url = self.active_server.get_base_url() + job_input.get("openai_route")
         data = job_input.get("openai_input")
         logging.info(f"Sending request to {url} with data: {data}")
 
-        
         method = "POST" if '/completion' in url else "GET"
         is_stream = data.get("stream")
 
         async with aiohttp.ClientSession() as session:
             async with session.request(method, url, json=data) as response:
-                logging.info(f"Received response: {response}, {response.status}")
-                logging.info(f"Headers: {response.headers}")
+                logging.info(f"Received response: {response.status} {response}")
 
                 if response.status != 200:
                     yield await parse_as_json(response)
@@ -218,60 +202,27 @@ async def parse_as_json(response):
         logging.error(f"Error parsing response: {e}")
         return result
 
-def get_initial_server_name():
-    return os.environ.get("INITIAL_SERVER", "lcpp")
-
-processor = Processor(None)
-
-async def handler(job):
-    results_generator = processor.process(job)
-    async for batch in results_generator:
-        yield batch
-
 
 def run():
-    if os.getenv("START_SEVER_ON_BOOT", "0") == "1":
-        processor.start_new_server(
-            name=get_initial_server_name(),
-            wait=os.getenv("INITIAL_WAIT", "0") == "1"
-        )
-
     logging.info("Starting serverless.runpod.serverless.start")
+
+    processor = Processor(None)
+
+    # async def handler(job):
+    #     results_generator = processor.process(job)
+    #     async for batch in results_generator:
+    #         yield batch
+
+    if os.getenv("START_SEVER_ON_BOOT", "0") == "1":
+        processor.start_new_server()
+
     runpod.serverless.start(
         {
-            "handler": handler,
+            "handler": processor.process,
             "concurrency_modifier": lambda x: int(os.getenv("MAX_CONCURRENCY", 10)),
             "return_aggregate_stream": True,
         }
     )
 
-
-def test():
-    processor.active_server = LLMServer("LCPP")
-
-    async def invoke_handler():
-        print("Invoking handler")
-        job = {
-            "input": {
-                "openai_route": "/v1/models",
-                "openai_input": {
-                    "model": "gpt-2",
-                    "prompt": "Once upon a time",
-                    # "max_tokens": 50
-                    # "stream": True,
-                    "n_predict": 20
-                }
-            }
-        }
-
-        async for chunk in handler(job):
-            print(chunk)
-
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(invoke_handler())
-
-
-if len(sys.argv) == 2 and sys.argv[1] == "test":
-    test()
-else:
+if __name__ == "__main__":
     run()

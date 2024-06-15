@@ -35,20 +35,3 @@ export START_SEVER_ON_BOOT=0
 export LLCP_MODEL_PATH="/runpod-volume/models/microsoft--Phi-3-mini-4k-instruct-gguf/Phi-3-mini-4k-instruct-q4.gguf"
 export VLLM_MODEL_PATH="/runpod-volume/models/kaitchup--Phi-3-mini-4k-instruct-gptq-4bit"
 export EXL2_MODEL_NAME="bartowski--Phi-3-mini-4k-instruct-exl2"
-
-export EXL2_CONFIG="
-# https://github.com/theroyallab/tabbyAPI/blob/main/config_sample.yml
-network:
-  host: 127.0.0.1
-  port: 8002
-  disable_auth: True
-
-logging:
-  prompt: False
-  generation_params: False
-
-model:
-  model_dir: $MODELS_DIR
-  model_name: $EXL2_MODEL_NAME
-  cache_mode: Q8
-"

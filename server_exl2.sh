@@ -3,6 +3,8 @@ set -ex
 
 ./download.sh
 
+source ./gen-exl2-conf.sh
+
 cd /tabbyAPI
 source /venv-exl2/bin/activate
 python3 ./start.py --help

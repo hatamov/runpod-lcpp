@@ -129,7 +129,7 @@ class Processor:
             job_input["openai_route"] = "/v1/completions"
             job_input["openai_input"] = {
                 "prompt": job_input.get("prompt", "Once upon a time"),
-                "n_predict": 20,
+                "max_tokens": 20,
                 "stream": True,
             }
 
